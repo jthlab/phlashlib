@@ -11,7 +11,7 @@ def test_warn_nogpu(monkeypatch):
         import phlashlib.loglik
 
 
-def test_no_chunk_size(data, ii):
+def test_no_chunk_size(data, pwc):
     from phlashlib.loglik import loglik
 
-    loglik(data, ii, jnp.linspace(0, 10, 16), 1e-4, 1e-4)
+    loglik(data, pwc, jnp.linspace(0, 10, 16), 1e-4, 1e-4)

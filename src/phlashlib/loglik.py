@@ -61,7 +61,7 @@ def loglik(
     # approximate coal rate by piecewise constant function
     c = jnp.array([coal_rate(t) for t in times])
     pwc = PiecewiseConstant(t=times, c=c)
-    pp = PSMCParams.from_pwc(pwc, theta=theta, rho=rho)
+    pp = PSMCParams.from_piecewise_const(pwc, theta=theta, rho=rho)
 
     if chunk_size < warmup or L < warmup:
         return hmm.forward(pp, data)[1]
