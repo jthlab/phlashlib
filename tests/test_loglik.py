@@ -1,0 +1,17 @@
+import os
+
+import jax
+import jax.numpy as jnp
+import pytest
+
+
+def test_warn_nogpu(monkeypatch):
+    monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "")
+    with pytest.warns(UserWarning, match="GPU support not available"):
+        import phlashlib.loglik
+
+
+def test_no_chunk_size(data, ii):
+    from phlashlib.loglik import loglik
+
+    loglik(data, ii, jnp.linspace(0, 10, 16), 1e-4, 1e-4)

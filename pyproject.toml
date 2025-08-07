@@ -1,0 +1,35 @@
+[project]
+name = "phlashlib"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Jonathan Terhorst", email = "jonth@umich.edu" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "beartype>=0.21.0",
+    "equinox>=0.13.0",
+    "jax>=0.7.0",
+    "jaxtyping>=0.3.2",
+    "loguru>=0.7.3",
+    "sgkit>=0.10.0",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "jax[cuda12]>=0.7.0",
+    "cuda-bindings>=12.3,<13.0",
+    "cuda-core>=0.3.1",
+    "cuda-python>=12.2,<13",
+    "cupy-cuda12x>=13.5.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.4,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]
