@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  cpu-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (CPU)
+        run: |
+          pip install .[dev]
+
+      - name: Run tests (CPU)
+        run: pytest -v
+
+  gpu-tests:
+    runs-on: [self-hosted, gpu]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (GPU)
+        run: |
+          pip install .[dev,gpu]
+
+      - name: Check GPU availability
+        run: |
+          python -c "import jax; print(jax.devices())"
+
+      - name: Run tests (GPU)
+        run: pytest -v
