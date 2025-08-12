@@ -2,10 +2,14 @@ import equinox as eqx
 import jax
 import jax.numpy as jnp
 import numpy as np
+import pytest
 from jax.test_util import check_grads
 from pytest import fixture
 
-import phlashlib.gpu as gpu
+try:
+    import phlashlib.gpu as gpu
+except:
+    pytest.skip("GPU support not available", allow_module_level=True)
 import phlashlib.hmm as hmm
 from phlashlib.iicr import PiecewiseConstant
 from phlashlib.params import PSMCParams

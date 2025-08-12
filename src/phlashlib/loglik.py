@@ -14,7 +14,7 @@ from .iicr import PiecewiseConstant
 from .params import PSMCParams, PSMCParamsType
 
 try:
-    from .gpu import _gpu_ll as _logloglik
+    from phlashlib.gpu import _gpu_ll as _logloglik
 except Exception as e:
     warn("GPU support not available, falling back to CPU implementation.")
     logger.debug("GPU support not available: {}", e)

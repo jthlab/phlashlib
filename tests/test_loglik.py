@@ -1,4 +1,5 @@
 import os
+import sys
 
 import jax
 import jax.numpy as jnp
@@ -7,6 +8,8 @@ import pytest
 
 def test_warn_nogpu(monkeypatch):
     monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "")
+    sys.modules.pop("phlashlib.loglik", None)
+    sys.modules.pop("phlashlib", None)
     with pytest.warns(UserWarning, match="GPU support not available"):
         import phlashlib.loglik
 
