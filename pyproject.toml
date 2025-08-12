@@ -1,7 +1,7 @@
 [project]
 name = "phlashlib"
 version = "0.1.0"
-description = "Add your description here"
+description = "Fast evaluation of SMC' likelihood for population genetic data"
 readme = "README.md"
 authors = [
     { name = "Jonathan Terhorst", email = "jonth@umich.edu" }
@@ -13,7 +13,6 @@ dependencies = [
     "jax>=0.7.0",
     "jaxtyping>=0.3.2",
     "loguru>=0.7.3",
-    "sgkit>=0.10.0",
 ]
 
 [project.optional-dependencies]
