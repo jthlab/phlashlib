@@ -1,6 +1,6 @@
-import abc
 from dataclasses import dataclass
 
+import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import ArrayLike, Float, Scalar, ScalarLike
@@ -14,16 +14,14 @@ def _expm1inv(x):
     return jnp.where(x_large, -jnp.exp(-x) / jnp.expm1(-x), 1.0 / jnp.expm1(x_safe))
 
 
-class IICRCurve(abc.ABC):
-    @abc.abstractmethod
+class IICRCurve(eqx.Module):
     def __call__(self, t: ScalarLike) -> Scalar:
         "Evaluate the coalescent rate at time points `t`."
-        pass
+        raise NotImplementedError()
 
-    @abc.abstractmethod
     def ect(self, s: ScalarLike, t: ScalarLike) -> Scalar:
         "Expected coalescent time conditional on coalescing between `s` and `t`."
-        pass
+        raise NotImplementedError()
 
     def R(self, t: ScalarLike) -> Scalar:
         "Evaluate the cumulative hazard rate at time points `t`."
@@ -31,8 +29,6 @@ class IICRCurve(abc.ABC):
         return jnp.trapezoid(x=x, y=self(x))
 
 
-@jax.tree_util.register_dataclass
-@dataclass
 class PiecewiseConstant(IICRCurve):
     "A piecewise constant IICR curve."
 

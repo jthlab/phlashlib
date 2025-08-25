@@ -18,3 +18,11 @@ def test_warn_nogpu(monkeypatch):
 
 def test_long_data(data_long, pwc):
     loglik(data_long, pwc, jnp.linspace(0, 10, 16), 1e-4, 1e-4, warmup=10)
+
+
+def test_vmap(data_long, pwc):
+    data_batched = jnp.array([data_long] * 5)
+    res = jax.vmap(loglik, in_axes=(0,) + (None,) * 6)(
+        data_batched, pwc, jnp.linspace(0, 10, 16), 1e-4, 1e-4, 500, 10
+    )
+    assert res.shape == (5,)
