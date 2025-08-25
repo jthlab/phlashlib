@@ -5,6 +5,8 @@ import jax
 import jax.numpy as jnp
 import pytest
 
+from phlashlib.loglik import loglik
+
 
 def test_warn_nogpu(monkeypatch):
     monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "")
@@ -14,7 +16,5 @@ def test_warn_nogpu(monkeypatch):
         import phlashlib.loglik
 
 
-def test_no_chunk_size(data, pwc):
-    from phlashlib.loglik import loglik
-
-    loglik(data, pwc, jnp.linspace(0, 10, 16), 1e-4, 1e-4)
+def test_long_data(data_long, pwc):
+    loglik(data_long, pwc, jnp.linspace(0, 10, 16), 1e-4, 1e-4, warmup=10)

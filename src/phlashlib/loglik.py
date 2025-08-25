@@ -2,9 +2,9 @@
 
 from warnings import warn
 
+import jax
 import jax.numpy as jnp
 from beartype.typing import Callable
-from jax import vmap
 from jaxtyping import ArrayLike, Float, Int, Int8, Scalar, ScalarLike
 from loguru import logger
 
@@ -72,14 +72,16 @@ def loglik(
         data, (0, chunk_size - L % chunk_size), mode="constant", constant_values=-1
     )
     chunks = data.reshape(-1, chunk_size)
-    warmups = data[:, -warmup:][:-1]
+    warmups = chunks[:, -warmup:][:-1]
 
     # compute initial dist for each chunk
-    pps = jax.vmap(lambda w: hmm.forward(pp, w)[1])(warmups)
+    pis = jax.vmap(lambda w: hmm.forward(pp, w)[0])(warmups)
 
     # initial dist for chunk0 = pi
-    pps = jax.tree.map(lambda x, y: jnp.concatenate((x[None], y)), pp, pps)
+    pis = jnp.concatenate([pp.pi[None], pis])
 
-    # log parameters and return
+    # create psmcparams for each pi
+    pps = jax.vmap(lambda pi: pp._replace(pi=pi))(pis)
     log_pps = jax.tree.map(jnp.log, pps)
-    return vmap(_logloglik)(log_pps, chunks).sum()
+
+    return jax.vmap(_logloglik)(log_pps, chunks).sum()

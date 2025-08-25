@@ -42,3 +42,8 @@ def log_pp(pp):
 @fixture
 def data(rng):
     return rng.integers(0, 2, 10).astype(np.int8)
+
+
+@fixture
+def data_long(rng):
+    return rng.integers(0, 2, 10_000).astype(np.int8)
