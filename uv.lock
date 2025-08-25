@@ -471,17 +471,15 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+]
 gpu = [
     { name = "cuda-bindings" },
     { name = "cuda-core" },
     { name = "cuda-python" },
     { name = "cupy-cuda12x" },
     { name = "jax", extra = ["cuda12"] },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
 ]
 
 [package.metadata]
@@ -496,11 +494,9 @@ requires-dist = [
     { name = "jax", extras = ["cuda12"], marker = "extra == 'gpu'", specifier = ">=0.7.0" },
     { name = "jaxtyping", specifier = ">=0.3.2" },
     { name = "loguru", specifier = ">=0.7.3" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.4.1" },
 ]
-provides-extras = ["gpu"]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.4.1" }]
+provides-extras = ["gpu", "dev"]
 
 [[package]]
 name = "pluggy"
