@@ -59,7 +59,7 @@ def loglik(
         chunk_size = int(min(10_000, L / 100))
 
     # approximate coal rate by piecewise constant function
-    c = jnp.array([coal_rate(t) for t in times])
+    c = jax.vmap(coal_rate)(times)
     pwc = PiecewiseConstant(t=times, c=c)
     pp = PSMCParams.from_piecewise_const(pwc, theta=theta, rho=rho)
 
