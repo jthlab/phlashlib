@@ -35,6 +35,12 @@ class PiecewiseConstant(IICRCurve):
     t: Float[ArrayLike, "T"]
     c: Float[ArrayLike, "T"]
 
+    def _replace(self, t=None, c=None):
+        return PiecewiseConstant(
+            t=self.t if t is None else t,
+            c=self.c if c is None else c,
+        )
+
     @property
     def T(self):
         return self.t.shape[0]
