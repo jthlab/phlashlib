@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import equinox as eqx
 import jax
 import jax.numpy as jnp
+import optimistix as optx
 from jaxtyping import ArrayLike, Float, Scalar, ScalarLike
 
 
