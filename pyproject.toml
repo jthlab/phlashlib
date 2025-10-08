@@ -1,6 +1,6 @@
 [project]
 name = "phlashlib"
-version = "0.1.0"
+version = "0.1.1"
 description = "Fast evaluation of SMC' likelihood for population genetic data"
 readme = "README.md"
 authors = [
