@@ -50,7 +50,7 @@ def transition_matrix(eta: PiecewiseConstant, rho: ScalarLike, n: int = 2) -> ja
     dt0 = jnp.isclose(dt_aug, 0.0)
     dt_safe = jnp.where(dt0, 1.0, dt_aug)
     cr = jnp.repeat(eta.c, 2, axis=0)[:-1]
-    P = jax.vmap(_expQ, (0, 0, None))(2 * dt_safe * rho, dt_aug * cr, n)
+    P = jax.vmap(_expQ, (0, 0, None))(dt_safe * rho, dt_aug * cr, n)
     P = jnp.where(dt0[:, None, None], jnp.eye(3)[None], P)
     Pinf = jnp.array([[0.0, 0.0, 1.0]] * 3)
     P = jnp.concatenate([jnp.eye(3)[None], P, Pinf[None]], 0)
