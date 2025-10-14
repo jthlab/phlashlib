@@ -1,5 +1,5 @@
 import operator
-from functools import lru_cache, reduce
+from functools import lru_cache, partial, reduce
 from pathlib import Path
 
 import cupy as cp
@@ -160,12 +160,10 @@ def _gpu_ll_fwd(
         ),
     )
     return jax.pure_callback(
-        _call_kernel,
+        partial(_call_kernel, grad=True, float32=True),
         result_shape_dtype,
         pp,
         data,
-        True,
-        True,
         vmap_method="broadcast_all",
     )
 
