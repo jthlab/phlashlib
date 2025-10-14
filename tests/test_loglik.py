@@ -30,6 +30,21 @@ def test_vmap(data_long, pwc):
     assert res.shape == (5,)
 
 
+def test_vmap_grad(data_long, pwc):
+    data_batched = jnp.array([data_long] * 5)
+    res = jax.vmap(jax.grad(loglik, argnums=1), in_axes=(0,) + (None,) * 6)(
+        data_batched, pwc, jnp.linspace(0, 10, 16), 1e-4, 1e-4, 500, 10
+    )
+
+
+def test_grad_float64(data_long, pwc):
+    jax.config.update("jax_enable_x64", True)
+    pwc = pwc._replace(c=pwc.c.astype(jnp.float64), t=pwc.t.astype(jnp.float64))
+    jax.grad(loglik, argnums=1)(
+        data_long, pwc, jnp.linspace(0, 10, 16, dtype=jnp.float64), 1e-4, 1e-4, 500, 10
+    )
+
+
 def test_scale_invariant(data_long, pwc):
     t = jnp.insert(jnp.geomspace(1e-4, 10, 15), 0, 0.0)
     theta = rho = 1e-4

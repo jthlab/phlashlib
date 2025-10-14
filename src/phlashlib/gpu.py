@@ -159,13 +159,14 @@ def _gpu_ll_fwd(
             *[jax.ShapeDtypeStruct(shape=(pp.M,), dtype=jnp.float32) for p in pp],
         ),
     )
-    return jax.pure_callback(
+    f, df = jax.pure_callback(
         partial(_call_kernel, grad=True, float32=True),
         result_shape_dtype,
         pp,
         data,
         vmap_method="broadcast_all",
     )
+    return f, jax.tree.map(lambda a, b: jnp.astype(a, b.dtype), df, log_pp)
 
 
 def _gpu_ll_bwd(df: PSMCParamsType, g: ScalarLike) -> tuple[PSMCParamsType, None]:
