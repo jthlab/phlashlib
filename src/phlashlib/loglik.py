@@ -82,6 +82,11 @@ def loglik(
 
     # create psmcparams for each pi
     pps = jax.vmap(lambda pi: pp._replace(pi=pi))(pis)
-    log_pps = jax.tree.map(jnp.log, pps)
+
+    def safelog(x):
+        "safe log"
+        return jnp.log(jnp.clip(x, 1e-20))
+
+    log_pps = jax.tree.map(safelog, pps)
 
     return jax.vmap(_logloglik)(log_pps, chunks).sum()
