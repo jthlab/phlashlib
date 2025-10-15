@@ -132,7 +132,6 @@ loglik_grad(int8_t const *datag,
         if (m == 0) {
             memcpy(p, pab, P * M * sizeof(FLOAT));
             memset(H, 0., sizeof(FLOAT) * P * M * M);
-            memset(dlog, 0., sizeof(FLOAT) * P * M * M);
             c = 0.;
             ll = 0.;
         }
@@ -226,6 +225,11 @@ loglik_grad(int8_t const *datag,
     // for pi we accumulated dll/dpi instead of dll/dlog(pi) so
     // we have to multiply by
     const FLOAT x = (g == LOG_PI) ? PI(m) : 1.;
+    dlog[
+        b * P * M + 
+        g * M + 
+        + m
+    ] = 0.;
     for (i = 0; i < M; ++i) {
         dlog[
             b * P * M + 

@@ -1,3 +1,6 @@
+import os
+import pickle
+
 import equinox as eqx
 import jax
 import jax.numpy as jnp
@@ -55,3 +58,17 @@ def test_staggered_vmap(pp, log_pp, data):
 
 def test_check_grads(log_pp, data):
     check_grads(lambda x: gpu._gpu_ll(x, data), args=(log_pp,), order=1, modes=["rev"])
+
+
+def test_nan_bug():
+    d = pickle.load(open(os.path.dirname(__file__) + "/assets/nan_bug.pkl", "rb"))
+    f = gpu._gpu_ll_fwd
+    for _ in range(2):
+        f = jax.vmap(f)
+    with jax.debug_nans(True):
+        ret = f(d["log_pp"], d["data"])
+
+    def f(x):
+        assert not jnp.isnan(x).any()
+
+    jax.tree.map(f, ret)
