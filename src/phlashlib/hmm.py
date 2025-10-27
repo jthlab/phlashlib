@@ -1,5 +1,6 @@
 import operator
 
+import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jax import lax, vmap
@@ -30,7 +31,6 @@ def forward(
 ) -> tuple[Float[Array, "M"], Scalar]:
     emis = jnp.stack([pp.emis0, pp.emis1, jnp.ones_like(pp.emis0)])
 
-    @jax.remat
     def fwd(tup, ob):
         alpha_hat, ll = tup
         alpha_hat = _matvec_smc(alpha_hat, pp)
@@ -41,4 +41,4 @@ def forward(
         return (alpha_hat, ll), None
 
     init = (pp.pi, 0.0)
-    return lax.scan(fwd, init, data)[0]
+    return eqx.internal.scan(fwd, init, data, kind="checkpointed")[0]
