@@ -10,7 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "beartype>=0.21.0",
     "dask>=2024.8.0",
-    "equinox>=0.13.0",
+    "equinox>=0.13.2",
     "jax>=0.7.2",
     "jaxtyping>=0.3.2",
     "loguru>=0.7.3",

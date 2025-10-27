@@ -633,7 +633,7 @@ wheels = [
 
 [[package]]
 name = "equinox"
-version = "0.13.1"
+version = "0.13.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jax" },
@@ -641,9 +641,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "wadler-lindig" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c8/43/2b7b3895f910f2335ade18a261b3f77ce9466605adbb211c4e254ad14b25/equinox-0.13.1.tar.gz", hash = "sha256:e90f11cfe66b2f73f5c172260a17c48851794a0f243dd2cbe4ea70f4c90cbd07", size = 139339, upload-time = "2025-09-20T15:21:40.199Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/17/96a3b61a80c63c75974bd84318cee2818a23d60628e77fb6ed00eb623a69/equinox-0.13.2.tar.gz", hash = "sha256:509ad744ff99b7c684d45230d6890f9e78eac1a556d7a06db1eff664a3cac74f", size = 139386, upload-time = "2025-10-09T10:15:39.595Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1f/10/9c0687024ce9e478a667262d111fb15502828d28c93482b48446e3558efd/equinox-0.13.1-py3-none-any.whl", hash = "sha256:3c6e9043352c9a63216b40e3f3cdd1d1452f82a0175cfe322f79630ebdb80d71", size = 179254, upload-time = "2025-09-20T15:21:38.679Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/ce/c3bc53bdda6edb050859939a8e91e206123f96f50906e7ba7c027c6c535f/equinox-0.13.2-py3-none-any.whl", hash = "sha256:bc1ee687e4841945d8b776664403839639a05e2f2c02c1da353ff3386e0e43b0", size = 179235, upload-time = "2025-10-09T10:15:37.991Z" },
 ]
 
 [[package]]
@@ -2148,7 +2148,7 @@ requires-dist = [
     { name = "cuda-python", marker = "extra == 'gpu'", specifier = ">=12.2,<13" },
     { name = "cupy-cuda12x", marker = "extra == 'gpu'", specifier = ">=13.5.1" },
     { name = "dask", specifier = ">=2024.8.0" },
-    { name = "equinox", specifier = ">=0.13.0" },
+    { name = "equinox", specifier = ">=0.13.2" },
     { name = "jax", specifier = ">=0.7.2" },
     { name = "jax", extras = ["cuda12"], marker = "extra == 'gpu'", specifier = ">=0.7.2" },
     { name = "jaxtyping", specifier = ">=0.3.2" },
