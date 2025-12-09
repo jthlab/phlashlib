@@ -16,8 +16,14 @@ from .params import PSMCParams, PSMCParamsType
 try:
     from phlashlib.gpu import _gpu_ll as _logloglik
 except Exception as e:
-    warn("GPU support not available, falling back to CPU implementation.")
-    logger.debug("GPU support not available: {}", e)
+    if os.environ.get("PHLASHLIB_ENABLE_CPU"):
+        warn("GPU support not available, falling back to CPU implementation.")
+        logger.debug("GPU support not available: {}", e)
+    else:
+        raise RuntimeError(
+            "GPU support not available. To enable CPU fallback, "
+            "set the environment variable PHLASHLIB_ENABLE_CPU."
+        ) from e
 
     def _logloglik(log_pp: PSMCParamsType, data: Int8[ArrayLike, "L"]):
         "log-likelihood of log params"
